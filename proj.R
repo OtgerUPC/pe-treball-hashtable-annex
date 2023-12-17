@@ -134,7 +134,7 @@ colKR <- "#44a5c2"
 colMurmur <- "#ffae49"
 
 ggplot() +
-  ggtitle("Esperança de col·lisions") + ylab("E(C)") +
+  ggtitle("Esperança de col·lisions") + ylab("C") +
   geom_line(data=KR_d_mean, aes(L, C), color=colKR,  lwd=1) +
   geom_line(data=Murmur_d_mean, aes(L, C), color=colMurmur,  lwd=1) +
   geom_point(data=KR_d_mean, aes(L, C, color='KR Hash'), size=5, pch=17) +
@@ -145,6 +145,18 @@ ggplot() +
   guides(shape = FALSE, colour = guide_legend(override.aes = list(shape = c(17, 16))))
 
 
+ggplot() +
+  ggtitle("Col·lisions") + ylab("C") +
+  geom_line(data=KR_d_mean, aes(L, C), color=colKR,  lwd=1) +
+  geom_line(data=Murmur_d_mean, aes(L, C), color=colMurmur,  lwd=1) +
+  geom_point(data=KR_d, aes(L, C, color='KR Hash'), size=4, pch=2) +
+  geom_point(data=Murmur_d, aes(L, C, color='Murmur Hash'), size=4, pch=1) +
+  scale_colour_manual(name = 'Hash',
+                      values =c('KR Hash'=colKR,'Murmur Hash'=colMurmur),
+                      breaks = c('KR Hash','Murmur Hash')) +
+  guides(shape = FALSE, colour = guide_legend(override.aes = list(shape = c(2, 1))))
+
+
 ##### C_KR - C_Murmur ##### 
 
 diff_d <- data_diff[data_diff$S==Size[1],]
@@ -153,7 +165,7 @@ diff_d_sd <- aggregate(C~L, data=diff_d, sd)
 
 ggplot(data=diff_d_mean, aes(L, C)) +
   ggtitle("Esperança de la diferència de col·lisions") +
-  ylab(bquote(E(C[KR] - C[Murmur]))) +
+  ylab(bquote(C[KR] - C[Murmur])) +
   geom_line(color=colKR, lwd=1) +
   geom_point(color=colKR, size=5)
 
